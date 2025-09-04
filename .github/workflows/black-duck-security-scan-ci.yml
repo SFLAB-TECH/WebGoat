@@ -34,8 +34,8 @@ jobs:
           blackducksca_scan_full: false
           detect_search_depth: 10
           blackducksca_prcomment_enabled: true
-          github_token: ${{ secrets.SFLAB-TOKEN }}
           blackducksca_fixpr_enabled: true
+          github_token: ${{ secrets.SFLAB-TOKEN }}
           blackducksca_waitForScan: true
           #mark_build_status: 'success'
           detect_args: |
