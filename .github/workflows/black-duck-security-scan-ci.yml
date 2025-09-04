@@ -40,8 +40,6 @@ jobs:
           detect_args: |
             --detect.blackduck.scan.mode=RAPID
             --detect.excluded.detector.types=GIT
-            --detect.project.name=Webgoat
-            --detect.project.version.name=PR_Test
             --blackduck.trust.cert=true
             --detect.accuracy.required=NONE
             --detect.timeout=5000
