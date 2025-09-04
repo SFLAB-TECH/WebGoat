@@ -25,14 +25,12 @@ jobs:
     
       - name: Black Duck SCA Full Scan
         id: black-duck-full-scan
-        if: ${{ github.event_name != 'pull_request' }}
         uses: blackduck-inc/black-duck-security-scan@v2
 
         with:
           blackducksca_url: ${{ secrets.BLACKDUCK_URL }}
           blackducksca_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
           detect_search_depth: 10
-          blackducksca_waitForScan: true
           blackducksca_fixpr_enabled: true
           github_token: ${{ secrets.SFLAB-TOKEN }}
           #mark_build_status: 'success'
@@ -44,29 +42,4 @@ jobs:
             --detect.accuracy.required=NONE
             --detect.timeout=5000
 
-      - name: Black Duck SCA PR Scan
-        id: black-duck-pr-scan
-        if: ${{ github.event_name == 'pull_request' }}
-        uses: blackduck-inc/black-duck-security-scan@v2
 
-        with:
-          blackducksca_url: ${{ secrets.BLACKDUCK_URL }}
-          blackducksca_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
-          blackducksca_scan_full: false
-          detect_search_depth: 10
-          blackducksca_fixpr_enabled: true        
-          blackducksca_prcomment_enabled: true
-          github_token: ${{ secrets.SFLAB-TOKEN }}
-          blackducksca_waitForScan: true
-          mark_build_status: 'success'
-          detect_args: |
-            --detect.blackduck.scan.mode=RAPID
-            --detect.excluded.detector.types=GIT
-            --detect.project.name=Webgoat
-            --detect.project.version.name=PR_Test
-            --blackduck.trust.cert=true
-            --detect.accuracy.required=NONE
-            --detect.timeout=5000
-#TEST
-#--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT
-#--detect.policy.check.fail.on.severities=CRITICAL
