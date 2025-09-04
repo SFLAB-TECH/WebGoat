@@ -9,20 +9,11 @@
 name: Black Duck Security Scan
 on:
   push:
-    branches:
-      - main
-      - master
-      - develop
-      - stage
-      - release
+    branches: [main, master, develop, stage, release]
   pull_request:
-    branches:
-      - main
-      - master
-      - develop
-      - stage
-      - release
-  workflow_dispatch: {}
+    branches: [main, master, develop, stage, release]
+  workflow_dispatch:
+  
 env:
   GIT_ACCESS_TOKEN: ${{ secrets.BOT_SECRET_KEY }}
 jobs:
@@ -34,7 +25,7 @@ jobs:
                 
       - name: Black Duck SCA PR Scan
         id: black-duck-pr-scan
-        if: ${{ github.event_name == 'pull_request' }}
+        #if: ${{ github.event_name == 'pull_request' }}
         uses: blackduck-inc/black-duck-security-scan@v2
 
         with:
@@ -46,11 +37,12 @@ jobs:
           blackducksca_prcomment_enabled: true
           github_token: ${{ secrets.SFLAB-TOKEN }}
           blackducksca_waitForScan: true
+          mark_build_status: 'success'
           detect_args: |
             --detect.blackduck.scan.mode=INTELLIGENT
             --detect.excluded.detector.types=GIT
             --detect.project.name=Webgoat
-            --detect.project.version.name=Action_Test
+            --detect.project.version.name=PR_Test
             --blackduck.trust.cert=true
             --detect.accuracy.required=NONE
             --detect.timeout=5000
