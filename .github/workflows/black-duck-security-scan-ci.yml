@@ -44,9 +44,9 @@ jobs:
           blackducksca_automation_prcomment: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           detect_search_depth: 10
-          blackducksca_scan_full: false
+          #blackducksca_scan_full: false
           detect_args: |
-            --detect.blackduck.scan.mode=RAPID
+            --detect.blackduck.scan.mode=INTELLIGENT
             --detect.excluded.detector.types=GIT
             --detect.project.name=Webgoat
             --detect.project.version.name=Action_Test
