@@ -53,5 +53,6 @@ jobs:
             --blackduck.trust.cert=true
             --detect.accuracy.required=NONE
             --detect.timeout=5000
+#TEST
 #--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT
 #--detect.policy.check.fail.on.severities=CRITICAL
