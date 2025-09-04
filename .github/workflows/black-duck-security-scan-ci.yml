@@ -14,14 +14,14 @@ on:
     branches: [main, master, develop, stage, release]
   workflow_dispatch:
   
-env:
-  GIT_ACCESS_TOKEN: ${{ secrets.BOT_SECRET_KEY }}
+# env:
+#   GIT_ACCESS_TOKEN: ${{ secrets.BOT_SECRET_KEY }}
 jobs:
   blackduck-scan:
     runs-on: ubuntu-22.04 #포트포워딩으로 Black Duck 서버를 사용할 경우
     steps:
       - uses: actions/checkout@v4
-      - run: git config --global url.https://$GIT_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
+      # - run: git config --global url.https://$GIT_ACCESS_TOKEN@github.com/.insteadOf https://github.com/
     
       - name: Black Duck SCA Scan
         id: black-duck-scan
