@@ -41,7 +41,7 @@ jobs:
           blackducksca_url: ${{ secrets.BLACKDUCK_URL }}
           blackducksca_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
           blackducksca_prcomment_enabled: true
-          blackducksca.automation.prComment: true
+          blackducksca_automation_prcomment: true
           github_token: ${{ secrets.GITHUB_TOKEN }}
           detect_search_depth: 10
           blackducksca_scan_full: false
