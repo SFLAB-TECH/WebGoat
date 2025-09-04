@@ -46,7 +46,7 @@ jobs:
           detect_search_depth: 10
           #blackducksca_scan_full: false
           detect_args: |
-            --detect.blackduck.scan.mode=INTELLIGENT
+            --detect.blackduck.scan.mode=RAPID
             --detect.excluded.detector.types=GIT
             --detect.project.name=Webgoat
             --detect.project.version.name=Action_Test
