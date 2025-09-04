@@ -25,7 +25,7 @@ jobs:
                 
       - name: Black Duck SCA PR Scan
         id: black-duck-pr-scan
-        #if: ${{ github.event_name == 'pull_request' }}
+        if: ${{ github.event_name == 'pull_request' }}
         uses: blackduck-inc/black-duck-security-scan@v2
 
         with:
@@ -39,7 +39,7 @@ jobs:
           blackducksca_waitForScan: true
           mark_build_status: 'success'
           detect_args: |
-            --detect.blackduck.scan.mode=INTELLIGENT
+            --detect.blackduck.scan.mode=RAPID
             --detect.excluded.detector.types=GIT
             --detect.project.name=Webgoat
             --detect.project.version.name=PR_Test
