@@ -28,6 +28,7 @@ jobs:
         uses: blackduck-inc/black-duck-security-scan@v2
 
         with:
+          include_diagnostics: true
           blackducksca_url: ${{ secrets.BLACKDUCK_URL }}
           blackducksca_token: ${{ secrets.BLACKDUCK_API_TOKEN }}
           detect_search_depth: 10
