@@ -33,9 +33,9 @@ jobs:
           blackducksca_waitForScan: true
           #mark_build_status: failure
           detect_args: |
-            --detect.project.name=Webgoat
-            --detect.project.version.name=PR_Test
             --blackduck.trust.cert=true
+#            --detect.project.name=Webgoat
+# --detect.project.version.name=PR_Test
 #TEST
 #--detect.excluded.detector.types=GIT
 #--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT
