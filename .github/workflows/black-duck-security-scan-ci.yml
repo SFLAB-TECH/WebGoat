@@ -36,11 +36,11 @@ jobs:
           github_token: ${{ secrets.GH_TOKEN }}
           blackducksca_waitForScan: true
           mark_build_status: failure
-          # detect_args: |
-          #   --detect.excluded.detector.types=GIT
-          #   --detect.project.name=Webgoat
-          #   --detect.project.version.name=PR_Test
-          #   --blackduck.trust.cert=true
+          detect_args: |
+            --detect.project.name=Webgoat
+            --detect.project.version.name=PR_Test
+            --blackduck.trust.cert=true
 #TEST
+#--detect.excluded.detector.types=GIT
 #--detect.blackduck.rapid.compare.mode=BOM_COMPARE_STRICT
 #--detect.policy.check.fail.on.severities=CRITICAL
