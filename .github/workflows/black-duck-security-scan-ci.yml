@@ -34,7 +34,7 @@ jobs:
           #mark_build_status: failure
           detect_args: |
             --detect.project.name=Webgoat
-            --detect.project.version.name=PR_TEST
+            --detect.project.version.name=PR_Test
             --blackduck.trust.cert=true
 #TEST
 #--detect.excluded.detector.types=GIT
