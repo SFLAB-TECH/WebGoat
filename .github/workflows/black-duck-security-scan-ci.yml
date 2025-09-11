@@ -24,7 +24,7 @@ jobs:
         id: black-duck-scan
         uses: blackduck-inc/black-duck-security-scan@v2
         with:
-          blackducksca_scan_full: false
+          # blackducksca_scan_full: false
           # include_diagnostics: true
           blackducksca_url: ${{ vars.BLACKDUCKSCA_URL }}
           blackducksca_token: ${{ secrets.BLACKDUCKSCA_TOKEN }}
