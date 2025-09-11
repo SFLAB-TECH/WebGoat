@@ -28,7 +28,8 @@ jobs:
           # include_diagnostics: true
           blackducksca_url: ${{ vars.BLACKDUCKSCA_URL }}
           blackducksca_token: ${{ secrets.BLACKDUCKSCA_TOKEN }}
-          blackducksca_prComment_enabled: true
+          #blackducksca_prComment_enabled: true
+          blackduckscac_fixpr_enabled: true
           github_token: ${{ secrets.GH_TOKEN }}
           blackducksca_waitForScan: true
           #mark_build_status: failure
