@@ -63,5 +63,7 @@ jobs:
           ### SCANNING: Required fields (v2 신규 규격 이름 반영) ###
           blackducksca_url: ${{ secrets.BLACKDUCK_URL }}      # (혹은 설정에 따라 vars.BLACKDUCK_URL)
           blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
-            
+
+      - name: Delete Continaer Image Tar
+        run: rm -rf /home/sflab/workspace/target_image/webgoat.tar
         
