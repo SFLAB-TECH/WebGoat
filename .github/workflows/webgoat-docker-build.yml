@@ -21,7 +21,12 @@ jobs:
         with:
           distribution: temurin
           java-version: "25"   # pom.xml 의 <java.version> 과 일치
-          cache: maven
+
+      - name: Clean Corrupted Maven Cache & Build (skip tests)
+        # 빌드 전에 깨진 surefire 플러그인 폴더를 강제로 지우고, -Dmaven.test.skip=true 옵션으로 컴파일합니다.
+        run: |
+          rm -rf /home/sflab/.m2/repository/org/apache/maven/plugins/maven-surefire-plugin
+          rm -rf /home/sflab/.m2/repository/org/apache/maven/surefire
 
       - name: Build JAR with Maven (skip tests)
         run: ./mvnw --batch-mode --no-transfer-progress clean package -Dmaven.test.skip=true -U
@@ -32,6 +37,3 @@ jobs:
             -t webgoat:latest \
             -t webgoat:${{ github.sha }} \
             -f ./Dockerfile .
-
-      - name: Show built image
-        run: docker images webgoat
