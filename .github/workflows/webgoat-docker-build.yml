@@ -43,3 +43,25 @@ jobs:
       # 4. 결과물 확인
       - name: Show built image
         run: docker images webgoat
+
+      # 5. .tar 저장
+      - name: Container Image Tar Save
+        run: docker save -o /home/sflab/workspace/target_image/webgoat.tar webgoat:latest
+
+      # 6. Black Duck SCA 컨테이너 이미지 스캔 단계 추가
+      - name: Black Duck Security Scan
+        uses: blackduck-inc/black-duck-security-scan@v2.10.0
+        env:
+          # 가이드라인에 명시된 DETECT 환경 변수 주입 방식을 사용합니다.
+          # 소스 코드 검사를 패스하고 타르볼 레이어만 스캔하도록 설정을 주입합니다.
+          DETECT_PROJECT_NAME: "(SY)TEST"
+          DETECT_PROJECT_VERSION_NAME: "GH_Container"
+          DETECT_CONTAINER_SCAN_FILE_PATH: "/home/sflab/workspace/target_image/webgoat.tar"
+          DETECT_TOOLS: "CONTAINER_SCAN"
+          BLACKDUCK_TRUST_CERT: TRUE
+        with:
+          ### SCANNING: Required fields (v2 신규 규격 이름 반영) ###
+          blackducksca_url: ${{ secrets.BLACKDUCK_URL }}      # (혹은 설정에 따라 vars.BLACKDUCK_URL)
+          blackducksca_token: ${{ secrets.BLACKDUCK_TOKEN }}
+            
+        
