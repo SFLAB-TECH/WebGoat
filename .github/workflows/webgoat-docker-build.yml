@@ -4,8 +4,6 @@ name: Build WebGoat Docker Image (self-hosted)
 # 레지스트리 push 없음 → 러너 머신의 docker images 에 바로 적재됩니다.
 
 on:
-  # push:
-  #   branches: [main, master]
   workflow_dispatch:        # Actions 탭에서 수동 실행 가능
 
 jobs:
@@ -16,24 +14,32 @@ jobs:
       - name: Checkout source
         uses: actions/checkout@v4
 
+      # 1. JDK 환경 설정 (호스트의 기본 캐시 기능은 오염을 방지하기 위해 사용하지 않음)
       - name: Set up JDK
         uses: actions/setup-java@v4
         with:
           distribution: temurin
-          java-version: "25"   # pom.xml 의 <java.version> 과 일치
+          java-version: "25"   # pom.xml 의 <java.version> 및 Dockerfile과 일치
 
-      - name: Clean Corrupted Maven Cache & Build (skip tests)
-        # 빌드 전에 깨진 surefire 플러그인 폴더를 강제로 지우고, -Dmaven.test.skip=true 옵션으로 컴파일합니다.
+      # 2. 깨진 로컬 캐시 전면 초기화 및 Maven 빌드
+      - name: Nuke Corrupted Maven Cache & Build JAR
+        # 특정 플러그인 폴더만 지우면 다른 플러그인(jar-plugin 등)에서 계속 터지므로, 
+        # .m2/repository 전체를 시원하게 밀어버린 뒤 완전 깨끗한 상태에서 새 의존성을 받습니다.
         run: |
-          rm -rf /home/sflab/.m2/repository/org/apache/maven/plugins/maven-surefire-plugin
-          rm -rf /home/sflab/.m2/repository/org/apache/maven/surefire
+          echo "Cleaning up corrupted Maven repository..."
+          rm -rf /home/sflab/.m2/repository
+          
+          echo "Starting clean Maven package..."
+          ./mvnw --batch-mode --no-transfer-progress clean package -Dmaven.test.skip=true -U
 
-      - name: Build JAR with Maven (skip tests)
-        run: ./mvnw --batch-mode --no-transfer-progress clean package -Dmaven.test.skip=true -U
-
+      # 3. 호스트에서 생성된 target/ 내의 JAR 파일을 가지고 Docker 이미지 빌드
       - name: Build Docker image (local only, no push)
         run: |
           docker build \
             -t webgoat:latest \
             -t webgoat:${{ github.sha }} \
             -f ./Dockerfile .
+
+      # 4. 결과물 확인
+      - name: Show built image
+        run: docker images webgoat
