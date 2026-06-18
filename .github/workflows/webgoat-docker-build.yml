@@ -4,8 +4,8 @@ name: Build WebGoat Docker Image (self-hosted)
 # 레지스트리 push 없음 → 러너 머신의 docker images 에 바로 적재됩니다.
 
 on:
-  push:
-    branches: [main, master]
+  # push:
+  #   branches: [main, master]
   workflow_dispatch:        # Actions 탭에서 수동 실행 가능
 
 jobs:
@@ -24,7 +24,7 @@ jobs:
           cache: maven
 
       - name: Build JAR with Maven (skip tests)
-        run: ./mvnw --batch-mode --no-transfer-progress clean package -DskipTests
+        run: ./mvnw --batch-mode --no-transfer-progress clean package -Dmaven.test.skip=true -U
 
       - name: Build Docker image (local only, no push)
         run: |
